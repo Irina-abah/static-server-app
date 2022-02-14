@@ -1,9 +1,12 @@
+require("./db/connection");
 const express = require('express');
+const movieRouter = require("./movies/movieRoutes");
 const app = express();
-const PORT = 5001;
+const PORT = process.env.PORT || 5001;
 
-app.use("/static", express.static("public"));
+app.use(express.json());
+app.use(movieRouter);
 
 app.listen(PORT, () => {
   console.log(`App is listening on port ${PORT}`);
-}); 
+});
