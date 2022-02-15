@@ -33,6 +33,20 @@ exports.deleteMovie = (req, res) => {
   })
 }
 
+exports.updateMovie = (req, res) => {
+  Movie.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+    context: 'query',
+  })
+  .orFail(new Error("Movie wasn't found"))
+  .then((movie) => res.send(movie))
+  .catch(err => {
+    console.log(err)
+    res.status(500).send({message: err.message})
+  })
+}
+
 exports.testRoute = async (req, res) => {
   res.status(200).send({"test": "test route works"})
 }
